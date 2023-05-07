@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "249588501791",
+    "project_id": "flutterhindicourse",
+    "storage_bucket": "flutterhindicourse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249588501791:android:f6400257bbd92ce5b4b42a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_hindi_course"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249588501791-vm0kdqaa8tvovbnhacsf5ju7fa1uekjl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnCbKzyOmUk3aYp9eig11ilfzJj1e2TNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249588501791-vm0kdqaa8tvovbnhacsf5ju7fa1uekjl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "249588501791-1nek7si7id1mrtrla3g1lqm00p2c31pm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterHindiCourse"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
