@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -22,26 +23,35 @@ class _InstaProfilePageState extends State<InstaProfilePage> {
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.black,
+              ))
+        ],
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
- 
         child: Column(
           children: [
             // Display Information
             Container(
-                     padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     child: Row(
                       children: [
-                      const  CircleAvatar(
+                        const CircleAvatar(
                           backgroundColor: Colors.black,
                           radius: 40,
                         ),
-                       const SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             children: [
@@ -49,7 +59,7 @@ class _InstaProfilePageState extends State<InstaProfilePage> {
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  children:const [
+                                  children: const [
                                     InstaProfileDisplayNumberWidget(
                                         count: '14.4K', label: 'Followers'),
                                     InstaProfileDisplayNumberWidget(
@@ -77,16 +87,14 @@ class _InstaProfilePageState extends State<InstaProfilePage> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 10
-                    ),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                       children: [
-                        Text('Akshit Madan'), 
-                        Text('A Flutter Developer'), 
+                      children: [
+                        Text('Akshit Madan'),
+                        Text('A Flutter Developer'),
                         Text('www.akshitmadan.com')
-                       ],
+                      ],
                     ),
                   )
                 ],
@@ -95,36 +103,37 @@ class _InstaProfilePageState extends State<InstaProfilePage> {
 
             // Highlights
             Container(
-                     padding: const EdgeInsets.all(4),
-              height: 100, 
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 100, 
-              itemBuilder: (context, index) {
-
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CircleAvatar(radius: 40,
-                  backgroundColor: index%2==0?Colors.red: Colors.black,),
-                );
-                
-              },)
-            ),
-
+                padding: const EdgeInsets.all(4),
+                height: 100,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 100,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor:
+                            index % 2 == 0 ? Colors.red : Colors.black,
+                      ),
+                    );
+                  },
+                )),
 
             // Profile Grid
             Expanded(
               child: Container(
-                child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,
-                crossAxisSpacing: 2 , 
-                mainAxisSpacing: 2
-                ),
-                itemCount: 100,
-                 itemBuilder: (context, index){ 
-                  return Container(
-                    color: Colors.black,
-                  );
-                }),
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 2),
+                    itemCount: 100,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        color: Colors.black,
+                      );
+                    }),
               ),
             )
           ],
