@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_hindi_course/services/functions/authentication.dart';
 
 class AuthenticationForm extends StatefulWidget {
   const AuthenticationForm({super.key});
@@ -13,6 +14,10 @@ class AuthenticationForm extends StatefulWidget {
 
 class _AuthenticationFormState extends State<AuthenticationForm> {
   final _formKey = GlobalKey<FormState>();
+  String email = '';
+  String password = '';
+  String fName = '';
+  String lName = '';
   bool isLogin = true;
 
   changeIsLoginValue() {
@@ -34,43 +39,100 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
           child: Column(
             children: [
               if (!isLogin)
-                const TextField(
-                  key: ValueKey('first_name'),
-                  decoration: InputDecoration(
+                TextFormField(
+                  key: const ValueKey('first_name'),
+                  decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       hintText: 'Enter First Name'),
+                  validator: (val) {
+                    if (val.toString().length < 2) {
+                      return 'Please Enter a Valid First Name';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (val) {
+                    setState(() {
+                      fName = val.toString();
+                    });
+                  },
                 ),
               if (!isLogin)
-                const TextField(
-                  key: ValueKey('last_name'),
-                  decoration: InputDecoration(
+                TextFormField(
+                  key: const ValueKey('last_name'),
+                  decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       hintText: 'Enter Last Name'),
+                  validator: (val) {
+                    if (val.toString().length < 2) {
+                      return 'Please Enter a Valid Last Name';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (val) {
+                    setState(() {
+                      lName = val.toString();
+                    });
+                  },
                 ),
-              const TextField(
-                key: ValueKey('email'),
-                decoration: InputDecoration(
+              TextFormField(
+                key: const ValueKey('email'),
+                decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email), hintText: 'Enter Email'),
+                validator: (val) {
+                  if (val.toString().isEmpty || !val.toString().contains('@')) {
+                    return 'Please Enter a Valid Email';
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (val) {
+                  setState(() {
+                    email = val.toString();
+                  });
+                },
               ),
-              const TextField(
-                key: ValueKey('password'),
+              TextFormField(
+                key: const ValueKey('password'),
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.security),
                     hintText: 'Enter Password'),
+                validator: (val) {
+                  if (val.toString().length < 6 ||
+                      !val.toString().contains('#')) {
+                    return 'Please Enter a Valid Password';
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (val) {
+                  setState(() {
+                    password = val.toString();
+                  });
+                },
               ),
               const SizedBox(height: 40),
               SizedBox(
                   width: double.maxFinite,
                   height: 50,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          isLogin
+                              ? AuthenticationFunctions.signIn(email, password)
+                              : AuthenticationFunctions.singUp(
+                                  context, email, password);
+                        }
+                      },
                       child: Text(isLogin ? "Login" : "SignUp"))),
               TextButton(
                   onPressed: () => changeIsLoginValue(),
                   child: isLogin
                       ? const Text("Don't have an account? SignUp")
-                      :const Text('Already have an account? Login'))
+                      : const Text('Already have an account? Login'))
             ],
           ),
         ),
