@@ -124,7 +124,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                           isLogin
                               ? AuthenticationFunctions.signIn(email, password)
                               : AuthenticationFunctions.singUp(
-                                  context, email, password);
+                                  context, email, password, fName, lName);
                         }
                       },
                       child: Text(isLogin ? "Login" : "SignUp"))),
