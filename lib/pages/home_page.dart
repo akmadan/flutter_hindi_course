@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hindi_course/pages/update_todo_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -84,9 +85,31 @@ class _HomePageState extends State<HomePage> {
                     return ListView.builder(
                         itemCount: docs.length,
                         itemBuilder: ((context, index) {
-                          return ListTile(
-                            title: Text(docs[index]['title']),
-                            subtitle: Text(docs[index]['description']),
+                          return Dismissible(
+                            key: ValueKey(docs[index].id),
+                            onDismissed: (direction) async {
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(currUser!.uid)
+                                  .collection('todos')
+                                  .doc(docs[index].id)
+                                  .delete();
+                            },
+                            child: ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            UpdateTodoPage(
+                                              desscription: docs[index]['description'], 
+                                              title:docs[index]['title'] ,
+                                              todoDocId: docs[index].id,
+                                            )));
+                              },
+                              title: Text(docs[index]['title']),
+                              subtitle: Text(docs[index]['description']),
+                            ),
                           );
                         }));
                   }
