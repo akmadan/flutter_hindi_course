@@ -5,6 +5,7 @@ import 'package:flutter_hindi_course/pages/authentication_form.dart';
 import 'package:flutter_hindi_course/pages/home_page.dart';
 import 'package:flutter_hindi_course/pages/insta_home_page.dart';
 import 'package:flutter_hindi_course/pages/insta_profile_page.dart';
+import 'package:flutter_hindi_course/pages/posts.dart';
 import 'package:flutter_hindi_course/widgets/basic_widgets.dart';
 
 void main() async {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: ((context, snapshot) {
         if(snapshot.hasData){ 
-          return const HomePage();
+          return const Posts();
         }
         else{ 
           return const AuthenticationForm();
