@@ -1,18 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hindi_course/pages/authentication_form.dart';
-import 'package:flutter_hindi_course/pages/home_page.dart';
-import 'package:flutter_hindi_course/pages/insta_home_page.dart';
-import 'package:flutter_hindi_course/pages/insta_profile_page.dart';
-import 'package:flutter_hindi_course/pages/posts.dart';
-import 'package:flutter_hindi_course/widgets/basic_widgets.dart';
+import 'package:flutter_hindi_course/pages/home.dart';
+import 'package:flutter_hindi_course/services/providers/counter_provider.dart';
+import 'package:flutter_hindi_course/utils/colors.dart';
+import 'package:provider/provider.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  runApp(const MyApp());
+void main() {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,17 +13,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(home: 
-    StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: ((context, snapshot) {
-        if(snapshot.hasData){ 
-          return const Posts();
-        }
-        else{ 
-          return const AuthenticationForm();
-        }
-        
-      }))  );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CounterProvider>(
+              create: (context) => CounterProvider())
+        ],
+        child: MaterialApp(
+            theme: ThemeData(
+                elevatedButtonTheme: ElevatedButtonThemeData(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(AppColors.primaryColor))),
+                floatingActionButtonTheme: FloatingActionButtonThemeData(
+                    backgroundColor: AppColors.primaryColor),
+                appBarTheme:
+                    AppBarTheme(backgroundColor: AppColors.primaryColor),
+                primaryColor: AppColors.primaryColor),
+            home: Home()));
   }
 }
