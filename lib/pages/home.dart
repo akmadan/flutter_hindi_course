@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,10 +18,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Consumer<CounterProvider>(
-      builder: (context, counterModel, child) => Scaffold(
+      builder: (context, counterProvider, child) => Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            counterModel.increment();
+            counterProvider.increment();
           },
           child: const Center(
             child: Icon(Icons.add),
@@ -33,7 +35,7 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                counterModel.number.toString(),
+                counterProvider.number.toString(),
                 style: const TextStyle(
                     color: Colors.red,
                     fontSize: 60,
@@ -51,17 +53,27 @@ class _HomeState extends State<Home> {
                               builder: (context) => const Secondary()));
                     },
                     child: Text('Navigate')),
-              ), 
+              ),
               const SizedBox(height: 20),
               SizedBox(
                 width: 300,
                 height: 50,
                 child: ElevatedButton(
                     onPressed: () {
-                    counterModel.decrement();
+                      counterProvider.decrement();
                     },
                     child: Text('Decrement')),
-              )
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 300,
+                height: 50,
+                child: ElevatedButton(
+                    onPressed: () {
+                      counterProvider.reset();
+                    },
+                    child: Text('Reset')),
+              ),
             ],
           ),
         ),
